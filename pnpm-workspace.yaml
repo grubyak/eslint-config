@@ -1,2 +1,5 @@
+packages:
+  - .
+
 patchedDependencies:
   eslint-plugin-header: patches/eslint-plugin-header.patch
