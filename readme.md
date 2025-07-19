@@ -17,7 +17,7 @@ import config from "@grby/eslint-config";
 export default config;
 ```
 
-### usage: withLicenseHeader
+### usage: license header
 
 ```
 // eslint.config.js
