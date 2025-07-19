@@ -1,5 +1,11 @@
 # @grby/eslint-config
 
+## 1.0.2
+
+### Patch Changes
+
+- 698cdba: split config (react, vitest, header)
+
 ## 1.0.1
 
 ### Patch Changes
