@@ -4,7 +4,7 @@
   "description": "shared eslint config",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.js"
   },
   "license": "MIT",
   "keywords": [
