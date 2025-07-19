@@ -4,12 +4,16 @@
   "description": "shared eslint config",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.js"
   },
   "license": "MIT",
   "keywords": [
     "eslint"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grubyak/eslint-config"
+  },
   "devDependencies": {
     "@changesets/cli": "2.29.5",
     "@eslint/js": "9.31.0",
