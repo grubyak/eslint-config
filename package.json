@@ -4,7 +4,10 @@
   "description": "shared eslint config",
   "type": "module",
   "exports": {
-    ".": "./src/index.js"
+    ".": "./src/index.js",
+    "./vitest": "./src/with-vitest.js",
+    "./react": "./src/with-react.js",
+    "./header": "./src/with-license-header.js"
   },
   "license": "MIT",
   "keywords": [

@@ -2,11 +2,12 @@ import config from "./src/index.js";
 
 export default [
   ...config,
+
+  // exceptions: this repo
   {
-    settings: {
-      react: {
-        version: "99.0.0",
-      },
+    files: ["src/**/*"],
+    rules: {
+      "sort-keys-fix/sort-keys-fix": "off",
     },
   },
 ];

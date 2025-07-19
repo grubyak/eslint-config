@@ -2,15 +2,12 @@ import js from "@eslint/js";
 import importPlugin from "eslint-plugin-import";
 import json from "eslint-plugin-json";
 import prettierRecommended from "eslint-plugin-prettier/recommended";
-import react from "eslint-plugin-react";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
 import importSort from "eslint-plugin-simple-import-sort";
 import sonarjs from "eslint-plugin-sonarjs";
 import sortKeysFix from "eslint-plugin-sort-keys-fix";
-import vitest from "eslint-plugin-vitest";
 import globals from "globals";
 import ts from "typescript-eslint";
+import { withExceptions } from "./with-exceptions.js";
 
 const globalsBrowser = Object.fromEntries(Object.entries(globals.browser).map(([key, val]) => [key.trim(), val]));
 
@@ -202,45 +199,44 @@ export default ts.config(
   {
     files: ["**/*.ts", "**/*.tsx", "**/*.js"],
     rules: {
-      // simplify arrow functions
-      "arrow-body-style": ["error", "as-needed"],
-
-      "no-useless-concat": ["error"],
+      // quotes
+      quotes: ["error", "double", { avoidEscape: true }],
 
       // require property shorthand syntax for object literals
       "object-shorthand": ["error", "always"],
 
-      // arrow functions instead of function expressions
-      "prefer-arrow-callback": ["error"],
-
-      // trailing commas
-      "comma-dangle": ["error", "always-multiline"],
-
       // template literals instead of string concatenation
       "prefer-template": ["error"],
+      "no-useless-concat": ["error"],
+
+      // comment readability
+      "spaced-comment": ["error", "always", { markers: ["/"] }],
+
+      // arrow functions instead of function expressions
+      "prefer-arrow-callback": ["error"],
+      "func-style": ["error", "expression"],
+
+      // simplify arrow functions
+      "arrow-body-style": ["error", "as-needed"],
+
+      // blank lines
+      "no-multiple-empty-lines": ["error", { max: 1 }],
 
       // no one liners
       curly: ["error", "all"],
 
-      // quotes
-      quotes: ["error", "double", { avoidEscape: true }],
-
-      "func-style": ["error", "expression"],
-      // blank lines
-      "no-multiple-empty-lines": ["error", { max: 1 }],
-      // comment readability
-      "spaced-comment": ["error", "always", { markers: ["/"] }],
       // padding
       "padding-line-between-statements": [
         "error",
 
         // require a newline after imports unless the previous statement was also an import
-        { blankLine: "always", next: "*", prev: "import" },
-        { blankLine: "any", next: "import", prev: "import" },
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "any", prev: "import", next: "import" },
 
         // require a newline after variable declarations if the next statement is not a variable declaration of the same type
         {
           blankLine: "always",
+          prev: ["const", "let"],
           next: [
             "expression",
             "block",
@@ -256,22 +252,24 @@ export default ts.config(
             "try",
             "with",
           ],
-          prev: ["const", "let"],
         },
 
         // do not require a newline between variable declarations of the same type
-        { blankLine: "any", next: ["const"], prev: ["const"] },
-        { blankLine: "any", next: ["let"], prev: ["let"] },
+        { blankLine: "any", prev: ["const"], next: ["const"] },
+        { blankLine: "any", prev: ["let"], next: ["let"] },
 
         // enforce a newline after block statements and before the next statement
-        { blankLine: "always", next: "*", prev: ["block", "block-like"] },
-        { blankLine: "always", next: "if", prev: "*" },
-        { blankLine: "always", next: "*", prev: "if" },
+        { blankLine: "always", prev: ["block", "block-like"], next: "*" },
+        { blankLine: "always", prev: "*", next: "if" },
+        { blankLine: "always", prev: "if", next: "*" },
 
         // enforce a newline before the export keyword
-        { blankLine: "always", next: "export", prev: "*" },
-        { blankLine: "any", next: "export", prev: "export" },
+        { blankLine: "always", prev: "*", next: "export" },
+        { blankLine: "any", prev: "export", next: "export" },
       ],
+
+      // trailing commas
+      "comma-dangle": ["error", "always-multiline"],
     },
   },
 
@@ -284,82 +282,8 @@ export default ts.config(
     },
   },
 
-  // react-refresh
-  {
-    files: ["**/*.ts", "**/*.tsx", "**/*.js"],
-    plugins: { "react-refresh": reactRefresh },
-    rules: {
-      ...reactRefresh.configs.recommended.rules,
-      "react-refresh/only-export-components": ["error", { allowConstantExport: true }],
-    },
-  },
-
-  // react-hooks
-  {
-    files: ["**/*.ts", "**/*.tsx", "**/*.js"],
-    plugins: { "react-hooks": reactHooks },
-    rules: {
-      "react-hooks/exhaustive-deps": "error",
-      "react-hooks/rules-of-hooks": "error",
-    },
-  },
-
-  // react
-  {
-    files: ["**/*.ts", "**/*.tsx", "**/*.js"],
-    plugins: { react },
-    rules: {
-      ...react.configs.flat.recommended.rules,
-      "react/jsx-curly-brace-presence": ["warn", { children: "never", props: "never" }],
-      "react/prop-types": "off",
-      "react/react-in-jsx-scope": "off",
-    },
-    settings: { react: { version: "detect" } },
-  },
-
-  // tests
-  {
-    files: ["**/tests/**/*"],
-    languageOptions: {
-      globals: {
-        ...vitest.environments?.env?.globals,
-        global: true,
-      },
-    },
-    rules: {
-      "max-lines-per-function": [
-        "error",
-        {
-          max: 200,
-          skipBlankLines: true,
-          skipComments: true,
-        },
-      ],
-    },
-  },
-
-  // exceptions: configs
-  {
-    files: ["**/src/index.js", "**/{eslint,prettier,vite,vitest}.config.{js,ts,mts,mjs}"],
-    languageOptions: {
-      globals: {
-        ...globals.node,
-      },
-    },
-    rules: {
-      "import/no-default-export": "off",
-      "sort-keys-fix/sort-keys-fix": "off",
-    },
-  },
-
-  // exceptions: type definitions
-  {
-    files: ["**/*.d.ts"],
-    rules: {
-      "import/no-default-export": "off",
-      "no-undef": "off",
-    },
-  },
+  // exceptions
+  ...withExceptions,
 
   // ignores
   {
