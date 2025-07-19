@@ -28,7 +28,11 @@ jobs:
       - name: install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: publish with changesets
-        run: pnpm changeset publish
+      - name: release with changesets
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm changeset publish
+          title: "release: version bump and changelog"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
