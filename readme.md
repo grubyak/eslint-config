@@ -1,6 +1,6 @@
 # @grby/eslint-config
 
-shared eslint config
+eslint flat config with support for typescript, react, vitest, and license headers
 
 ### setup
 
