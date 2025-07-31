@@ -1,5 +1,12 @@
 # @grby/eslint-config
 
+## 1.0.3
+
+### Patch Changes
+
+- ebd010f: update deps
+- ebd010f: add repo config
+
 ## 1.0.2
 
 ### Patch Changes
