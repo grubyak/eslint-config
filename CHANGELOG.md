@@ -1,5 +1,12 @@
 # @grby/eslint-config
 
+## 1.0.6
+
+### Patch Changes
+
+- 9b112db: switch npm publish to oidc trusted publishing
+- 5cd3c86: fix release bug
+
 ## 1.0.5
 
 ### Patch Changes
