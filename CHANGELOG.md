@@ -1,5 +1,11 @@
 # @grby/eslint-config
 
+## 1.0.5
+
+### Patch Changes
+
+- b87a57f: shift and update dependencies
+
 ## 1.0.4
 
 ### Patch Changes
