@@ -5,7 +5,7 @@ eslint flat config with support for typescript, react, vitest, and license heade
 ### setup
 
 ```
-pnpm add -D @grby/eslint-config
+pnpm add -D @grby/eslint-config eslint
 ```
 
 ### usage
