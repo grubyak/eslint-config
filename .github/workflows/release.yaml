@@ -8,6 +8,9 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
 
     steps:
       - name: checkout repo
@@ -35,5 +38,5 @@ jobs:
           publish: pnpm changeset publish
           title: "release: version bump and changelog"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
