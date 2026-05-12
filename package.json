@@ -1,6 +1,6 @@
 {
   "name": "@grby/eslint-config",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "eslint flat config with support for typescript, react, vitest, and license headers",
   "type": "module",
   "exports": {
