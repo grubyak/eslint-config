@@ -1,5 +1,8 @@
 packages:
   - .
 
+allowBuilds:
+  unrs-resolver: true
+
 patchedDependencies:
   eslint-plugin-header: patches/eslint-plugin-header.patch
