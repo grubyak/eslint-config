@@ -1,5 +1,11 @@
 # @grby/eslint-config
 
+## 2.0.0
+
+### Major Changes
+
+- 968ca5e: upgrade eslint and @eslint/js to v10
+
 ## 1.0.6
 
 ### Patch Changes
